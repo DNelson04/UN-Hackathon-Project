@@ -15,3 +15,37 @@ body #map {
     color: #000000;
     text-align: center;
 }
+.leaflet-popup {
+  background: transparent !important; /* Make the popup background transparent */
+  border: none !important; /* Remove the border */
+  box-shadow: none !important; /* Remove any shadow */
+}
+
+.popup-content {
+  font-family: Arial, sans-serif; /* Font family */
+  font-size: 14px; /* Font size */
+  color: #333; /* Text color */
+  width: 200px; /* Width of the popup */
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background for content */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  padding: 10px; /* Padding inside the popup */
+
+}
+
+.popup-content h3 {
+  margin: 0; /* Remove default margin */
+  font-size: 16px; /* Font size for title */
+  color: #007BFF; /* Blue color for title */
+}
+
+.popup-content p {
+  margin: 5px 0; /* Space between paragraphs */
+}
+
+/* Add background and border styling */
+.leaflet-popup-content {
+  background: none !important; /* Make the popup content background transparent */
+  padding: 0; /* Remove any padding */
+  margin: 0; /* Remove default margin */
+}

@@ -8,7 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     var marker = L.marker([40.7536, -73.9832]).addTo(map)
-    .bindPopup('Restroom')
+    .bindPopup(`
+            <div class="popup-content">
+              <h3>Restroom</h3>
+              <p>Location: Bryant Park</p>
+              <p>Clean and accessible!</p>
+            </div>
+      `)
     .openPopup();
   
     // You can make API requests here, e.g., to fetch locations from your API
@@ -17,9 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         data.forEach(location => {
           L.marker([location.lat, location.lng]).addTo(map)
-            .bindPopup(location.name)
+            .bindPopup(`
+                        <div class="popup-content">
+                          <h3>${location.name}</h3>
+                          <p>Location details here.</p>
+                        </div>
+              
+              `)
             .openPopup();
         });
       })
       .catch(error => console.log('Error fetching map data:', error));
   });
+
