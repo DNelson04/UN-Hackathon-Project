@@ -171,6 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 
 
+
+    const restroomMarkers = [];
+    const trashCanMarkers = []; 
+
+
   restroomLocations.forEach(location => {
       var marker = L.marker([location.lat, location.lng], { icon: restroomIcon }).addTo(map)
           .bindPopup(`
@@ -188,6 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
       marker.on('mouseout', function() {
           this.setIcon(restroomIcon); 
       });
+
+      restroomMarkers.push(marker);
   });
 
   
@@ -208,5 +215,30 @@ document.addEventListener('DOMContentLoaded', () => {
       trashMarker.on('mouseout', function() {
           this.setIcon(trashCanIcon); 
       });
+
+      trashCanMarkers.push(trashMarker);
+
+
+      
   });
+ 
+ document.getElementById('toggleRestrooms').addEventListener('click', () => {
+    restroomMarkers.forEach(marker => {
+        if (map.hasLayer(marker)) {
+            map.removeLayer(marker); 
+        } else {
+            marker.addTo(map); 
+        }
+    });
+});
+
+document.getElementById('toggleTrashCans').addEventListener('click', () => {
+    trashCanMarkers.forEach(marker => {
+        if (map.hasLayer(marker)) {
+            map.removeLayer(marker); 
+        } else {
+            marker.addTo(map); 
+        }
+    });
+});
 });
