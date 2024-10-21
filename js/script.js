@@ -241,4 +241,31 @@ document.getElementById('toggleTrashCans').addEventListener('click', () => {
         }
     });
 });
+
+function addUserLocation(lat, lng) {
+    const userMarker = L.circleMarker([lat, lng], {
+        color: 'blue',
+        fillColor: '#03a9f4',
+        fillOpacity: 0.5,
+        radius: 8
+    }).addTo(map).bindPopup('Your Location');
+
+    
+    map.setView([lat, lng], 15); 
+
+    
+    userMarker.on('click', function () {
+        map.setView([lat, lng], 18); 
+    });
+}
+
+
+navigator.geolocation.getCurrentPosition(
+    (position) => {
+        addUserLocation(position.coords.latitude, position.coords.longitude);
+    },
+    (error) => {
+        console.error("Geolocation error:", error);
+    }
+);
 });
