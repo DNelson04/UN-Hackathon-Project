@@ -1,39 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
   var map = L.map('map').setView([40.7128, -74.0060], 12);
 
-  // Add tile layer from OpenStreetMap
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-  // Define icons for restrooms and trash cans
+  
   const restroomIcon = L.icon({
-      iconUrl: 'images/normal-icon.png', // Replace with your local restroom icon path
+      iconUrl: 'images/normal-icon.png', 
       iconSize: [40, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34]
   });
   const restroomhoverIcon = L.icon({
-    iconUrl: 'images/normal-icon.png', // Replace with your local hover icon path
+    iconUrl: 'images/normal-icon.png', 
     iconSize: [45, 43],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
   });
   const trashcanhovericon = L.icon({
-    iconUrl: 'images/trash-can-icon.png', // Replace with your local hover icon path
+    iconUrl: 'images/trash-can-icon.png', 
     iconSize: [45, 43],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
   });
 
   const trashCanIcon = L.icon({
-      iconUrl: 'images/trash-can-icon.png', // Replace with your local trash can icon path
+      iconUrl: 'images/trash-can-icon.png', 
       iconSize: [40, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34]
   });
 
-  // Array of restroom locations
+  
   const restroomLocations = [
     { lat: 40.7536, lng: -73.9832, name: 'Restroom 1', details: 'Location: Bryant Park, Clean and accessible!' },
     { lat: 40.7496, lng: -73.9877, name: 'Restroom 2', details: 'Location: Grand Central Terminal, Clean and accessible!' },
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7203, lng: -73.9940, name: 'Restroom 24', details: 'Location: Near the Hudson River Park, Clean and accessible!' }
   ];
 
-  // Array of trash can locations
+ 
   const trashCanLocations = [
     { lat: 40.7536, lng: -73.9842, name: 'Trash Can 1', details: 'Location: Near Bryant Park' },
     { lat: 40.7496, lng: -73.9860, name: 'Trash Can 2', details: 'Location: Grand Central Terminal Entrance' },
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7282, lng: -73.9870, name: 'Trash Can 32', details: 'Location: Near the NYU Campus' }
   ]
 
-  // Create markers for restroom locations
+
   restroomLocations.forEach(location => {
       var marker = L.marker([location.lat, location.lng], { icon: restroomIcon }).addTo(map)
           .bindPopup(`
@@ -107,17 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
           `);
 
-      // Add hover effect for restroom markers
+
       marker.on('mouseover', function() {
-          this.setIcon(restroomhoverIcon); // Change to hover icon if desired
+          this.setIcon(restroomhoverIcon); 
       });
 
       marker.on('mouseout', function() {
-          this.setIcon(restroomIcon); // Change back to restroom icon
+          this.setIcon(restroomIcon); 
       });
   });
 
-  // Create markers for trash can locations
+  
   trashCanLocations.forEach(location => {
       var trashMarker = L.marker([location.lat, location.lng], { icon: trashCanIcon }).addTo(map)
           .bindPopup(`
@@ -127,13 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
           `);
 
-      // Add hover effect for trash can markers
+      
       trashMarker.on('mouseover', function() {
-          this.setIcon(trashcanhovericon); // Change to hover icon if desired
+          this.setIcon(trashcanhovericon); 
       });
 
       trashMarker.on('mouseout', function() {
-          this.setIcon(trashCanIcon); // Change back to trash can icon
+          this.setIcon(trashCanIcon); 
       });
   });
 });

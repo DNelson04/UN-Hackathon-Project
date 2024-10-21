@@ -2,6 +2,7 @@ body {
   margin: 0;
   background-color: rgb(255, 255, 255);
   font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 body #map {
   text-align: center;
@@ -14,6 +15,7 @@ body #map {
 .header{
     color: #000000;
     text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .leaflet-popup {
   background: transparent !important; 
@@ -48,4 +50,11 @@ body #map {
   background: none !important; 
   padding: 0; 
   margin: 0; 
+}
+
+.description{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #000000;
+  text-align: center;
+
 }
