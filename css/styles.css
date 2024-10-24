@@ -109,3 +109,12 @@ body {
   background-color: #f58439;
 
 }
+img{
+  margin-right: 10%;
+  margin-top: 20%;
+  height: 350px;
+}
+.img-container{
+  display: flex;
+  justify-content: center;
+}
