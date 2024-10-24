@@ -3,16 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
-
+  
   
   const restroomIcon = L.icon({
-      iconUrl: 'images/normal-icon.png', 
-      iconSize: [40, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34]
+    iconUrl: 'images/normal-icon.png', 
+    iconSize: [40, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
   });
+  const lowConfidenceRestroomIcon = L.icon({
+    iconUrl: 'images/low-conf-icon.png',
+    iconSize: [35, 40],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  })
+  const lowConfRestroomHoverIcon = L.icon({
+    iconUrl: 'images/low-conf-icon.png',
+    iconSize: [40, 40],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  })
   const restroomhoverIcon = L.icon({
     iconUrl: 'images/normal-icon.png', 
     iconSize: [45, 43],
@@ -27,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const trashCanIcon = L.icon({
-      iconUrl: 'images/trash-can-icon.png', 
-      iconSize: [40, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34]
+    iconUrl: 'images/trash-can-icon.png', 
+    iconSize: [40, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
   });
 
   
@@ -170,102 +182,138 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.6469, lng: -73.9256, name: 'Trash Can 54', details: 'Location: Near Bushwick Inlet Park' },
   ]
 
+  const restroomMarkers = [];
+  const trashCanMarkers = [];
 
-
-    const restroomMarkers = [];
-    const trashCanMarkers = []; 
-
+  var result = fetch(
+    "https://overpass-api.de/api/interpreter",
+   {
+  method: "POST",
+  // The body contains the query
+  // to understand the query language see "The Programmatic Query Language" on
+  // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
+  body: "data="+ encodeURIComponent(`
+      [bbox:40.566528,-74.124389, 40.911032,-73.521317]
+      [out:json]
+      [timeout:90]
+      ;
+      area[name="New York"]->.nyc;
+      (
+      node["amenity"="toilets"](area.nyc);
+      way["amenity"="toilets"](area.nyc);
+      relation["amenity"="toilets"](area.nyc);
+      );
+      out center;
+    `)
+  }).then(
+  (response => response.json())
+  ).then(data => {
+    const elements = data.elements; // Get the 'elements' array from the response
+    elements.forEach(element => {
+    const { lat, lon, tags } = element; // Destructure latitude, longitude, and tags from each element
+    const amenityType = tags.amenity; // Get the type of amenity
+    const name = tags.name || "Unnamed location"; // Get the name if available, otherwise "Unnamed"
+    // Log the data for each public restroom (latitude, longitude, and name)
+    const matchedLocation = restroomLocations.find(location =>{
+      return coordinatesMatch(location.lat, location.lng, lat, lon);
+    });
+    if(!matchedLocation){
+      var marker = L.marker([lat, lon], {icon: lowConfidenceRestroomIcon}).addTo(map)
+      .bindPopup(`<strong>${name}</strong><br>Amenity: ${amenityType}`);
+      restroomLocations.push(marker)
+      marker.on('mouseover', function() {
+        this.setIcon(lowConfRestroomHoverIcon);
+      });
+      marker.on('mouseout', function() {
+        this.setIcon(lowConfidenceRestroomIcon);
+      });
+    }
+    else{
+    }});
+  })
 
   restroomLocations.forEach(location => {
-      var marker = L.marker([location.lat, location.lng], { icon: restroomIcon }).addTo(map)
-          .bindPopup(`
-              <div class="popup-content">
-                  <h3>${location.name}</h3>
-                  <p>${location.details}</p>
-              </div>
-          `);
-
-
-      marker.on('mouseover', function() {
-          this.setIcon(restroomhoverIcon); 
-      });
-
-      marker.on('mouseout', function() {
-          this.setIcon(restroomIcon); 
-      });
-
-      restroomMarkers.push(marker);
+    var marker = L.marker([location.lat, location.lng], { icon: restroomIcon }).addTo(map)
+      .bindPopup(`
+        <div class="popup-content">
+          <h3>${location.name}</h3>
+          <p>${location.details}</p>
+        </div>
+      `);
+    marker.on('mouseover', function() {
+      this.setIcon(restroomhoverIcon);
+    });
+    marker.on('mouseout', function() {
+      this.setIcon(restroomIcon);
+    });
+    restroomMarkers.push(marker);
   });
 
   
   trashCanLocations.forEach(location => {
-      var trashMarker = L.marker([location.lat, location.lng], { icon: trashCanIcon }).addTo(map)
-          .bindPopup(`
-              <div class="popup-content">
-                  <h3>${location.name}</h3>
-                  <p>${location.details}</p>
-              </div>
-          `);
+    var trashMarker = L.marker([location.lat, location.lng], { icon: trashCanIcon }).addTo(map)
+    .bindPopup(`
+    <div class="popup-content">
+    <h3>${location.name}</h3>
+    <p>${location.details}</p>
+    </div>
+  `);
 
-      
-      trashMarker.on('mouseover', function() {
-          this.setIcon(trashcanhovericon); 
-      });
+  
+  trashMarker.on('mouseover', function() {
+    this.setIcon(trashcanhovericon); 
+  });
 
-      trashMarker.on('mouseout', function() {
-          this.setIcon(trashCanIcon); 
-      });
+  trashMarker.on('mouseout', function() {
+    this.setIcon(trashCanIcon); 
+  });
 
-      trashCanMarkers.push(trashMarker);
-
-
-      
+  trashCanMarkers.push(trashMarker);
   });
  
  document.getElementById('toggleRestrooms').addEventListener('click', () => {
     restroomMarkers.forEach(marker => {
-        if (map.hasLayer(marker)) {
-            map.removeLayer(marker); 
-        } else {
-            marker.addTo(map); 
-        }
-    });
-});
+    if (map.hasLayer(marker)) {
+      map.removeLayer(marker); 
+    } else {
+      marker.addTo(map); 
+    }});
+  });
 
-document.getElementById('toggleTrashCans').addEventListener('click', () => {
+  document.getElementById('toggleTrashCans').addEventListener('click', () => {
     trashCanMarkers.forEach(marker => {
-        if (map.hasLayer(marker)) {
-            map.removeLayer(marker); 
-        } else {
-            marker.addTo(map); 
-        }
-    });
-});
+    if (map.hasLayer(marker)) {
+      map.removeLayer(marker); 
+    } else {
+      marker.addTo(map); 
+    }});
+  });
 
-function addUserLocation(lat, lng) {
+  function coordinatesMatch(lat1, lon1, lat2, lon2, tolerance = 0.001) {  
+    return Math.abs(lat1 - lat2) <= tolerance && Math.abs(lon1 - lon2) <= tolerance;
+    }});
+
+  function addUserLocation(lat, lng) {
     const userMarker = L.circleMarker([lat, lng], {
-        color: 'blue',
-        fillColor: '#03a9f4',
-        fillOpacity: 0.5,
-        radius: 8
-    }).addTo(map).bindPopup('Your Location');
+    color: 'blue',
+    fillColor: '#03a9f4',
+    fillOpacity: 0.5,
+    radius: 8
+  }).addTo(map).bindPopup('Your Location');
 
-    
-    map.setView([lat, lng], 15); 
+  
 
-    
-    userMarker.on('click', function () {
-        map.setView([lat, lng], 18); 
-    });
-}
+  userMarker.on('click', function () {
+    map.setView([lat, lng], 18); 
+  });
+  }
 
 
-navigator.geolocation.getCurrentPosition(
+  navigator.geolocation.getCurrentPosition(
     (position) => {
-        addUserLocation(position.coords.latitude, position.coords.longitude);
+      addUserLocation(position.coords.latitude, position.coords.longitude);
     },
     (error) => {
-        console.error("Geolocation error:", error);
+      console.error("Geolocation error:", error);
     }
-);
-});
+  );
