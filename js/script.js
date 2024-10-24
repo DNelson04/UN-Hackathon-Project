@@ -265,7 +265,7 @@ navigator.geolocation.getCurrentPosition(
         addUserLocation(position.coords.latitude, position.coords.longitude);
     },
     (error) => {
-        console.error("Geolocation error:", error);
+       
     }
 );
 });
