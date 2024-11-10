@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.6403, lng: -73.9447, name: 'Trash Can 52', details: 'Location: Near Marine Park Golf Course' },
     { lat: 40.7300, lng: -73.9304, name: 'Trash Can 53', details: 'Location: Near East River State Park' },
     { lat: 40.6469, lng: -73.9256, name: 'Trash Can 54', details: 'Location: Near Bushwick Inlet Park' },
+    
   ]
 
 
