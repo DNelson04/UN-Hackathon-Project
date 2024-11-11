@@ -8,41 +8,55 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   const restroomIcon = L.icon({
-    iconUrl: 'images/normal-icon.png', 
-    iconSize: [40, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+    iconUrl: 'images/restroom-icon.png', 
+    iconSize: [20, 25],
+    iconAnchor: [10, 24],
+    popupAnchor: [1, -26]
   });
-  const lowConfidenceRestroomIcon = L.icon({
-    iconUrl: 'images/low-conf-icon.png',
-    iconSize: [35, 40],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+  const restroomHoverIcon = L.icon({
+    iconUrl: 'images/restroom-icon.png', 
+    iconSize: [20, 28],
+    iconAnchor: [10, 27],
+    popupAnchor: [1, -29]
+  });
+  const waterFountainIcon = L.icon({
+    iconUrl: 'images/water-fountain-icon.png',
+    iconSize: [20, 25],
+    iconAnchor: [10, 24],
+    popupAnchor: [1, -26]
   })
-  const lowConfRestroomHoverIcon = L.icon({
-    iconUrl: 'images/low-conf-icon.png',
-    iconSize: [40, 40],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+  const waterFountainHoverIcon = L.icon({
+    iconUrl: 'images/water-fountain-icon.png',
+    iconSize: [20, 28],
+    iconAnchor: [10, 27],
+    popupAnchor: [1, -29]
   })
-  const restroomhoverIcon = L.icon({
-    iconUrl: 'images/normal-icon.png', 
-    iconSize: [45, 43],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-  });
-  const trashcanhovericon = L.icon({
-    iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [45, 43],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-  });
-
+  
   const trashCanIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [40, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+    iconSize: [18, 25],
+    iconAnchor: [9, 25],
+    popupAnchor: [1, -26]
+  });
+  
+  const trashcanHoverIcon = L.icon({
+    iconUrl: 'images/trash-can-icon.png', 
+    iconSize: [18, 28],
+    iconAnchor: [9, 26],
+    popupAnchor: [1, -29]
+  });
+
+  const benchIcon = L.icon({
+    iconUrl: 'images/bench-icon.png', 
+    iconSize: [20, 25],
+    iconAnchor: [10, 22],
+    popupAnchor: [1, -26]
+  })
+  const benchHoverIcon = L.icon({
+    iconUrl: 'images/bench-icon.png', 
+    iconSize: [22,27],
+    iconAnchor: [11, 24],
+    popupAnchor: [1, -28]
   });
 
   
@@ -122,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.6997, lng: -73.9241, name: 'Restroom 73', details: 'Location: Near Brownsville, Clean and accessible!' },
     { lat: 40.6268, lng: -73.9642, name: 'Restroom 74', details: 'Location: Near Fort Tilden Park, Clean and accessible!' },
     { lat: 40.6994, lng: -73.9204, name: 'Restroom 75', details: 'Location: Near Starrett City, Clean and accessible!' }
-  ];
+  ]
 
  
   const trashCanLocations = [
@@ -183,10 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
   ]
 
-  const restroomMarkers = [];
-  const trashCanMarkers = [];
+  const waterFountainLocations = []
 
-  var result = fetch(
+  const benchLocations = []
+
+async function loadToilets() {
+  try {
+  const toilets = await fetch(
     "https://overpass-api.de/api/interpreter",
    {
   method: "POST",
@@ -206,33 +223,140 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       out center;
     `)
-  }).then(
-  (response => response.json())
-  ).then(data => {
-    const elements = data.elements; // Get the 'elements' array from the response
-    elements.forEach(element => {
-    const { lat, lon, tags } = element; // Destructure latitude, longitude, and tags from each element
-    const amenityType = tags.amenity; // Get the type of amenity
-    const name = tags.name || "Unnamed location"; // Get the name if available, otherwise "Unnamed"
-    // Log the data for each public restroom (latitude, longitude, and name)
-    const matchedLocation = restroomLocations.find(location =>{
-      return coordinatesMatch(location.lat, location.lng, lat, lon);
-    });
-    if(!matchedLocation){
-      var marker = L.marker([lat, lon], {icon: lowConfidenceRestroomIcon}).addTo(map)
-      .bindPopup(`<strong>${name}</strong><br>Amenity: ${amenityType}`);
-      restroomLocations.push(marker)
-      marker.on('mouseover', function() {
-        this.setIcon(lowConfRestroomHoverIcon);
-      });
-      marker.on('mouseout', function() {
-        this.setIcon(lowConfidenceRestroomIcon);
-      });
-    }
-    else{
-    }});
-  })
+  });
+  const data = await toilets.json();
+    const elements = data.elements;
 
+    // Process each element asynchronously
+    for (const element of elements) {
+      // Ensure both lat and lon are present
+      if (element.lat != null && element.lon != null) {
+        const { lat, lon, tags } = element;
+        const amenityType = tags.amenity;
+        const name = tags.name || "Unnamed location";
+        
+        const matchedLocation = restroomLocations.find(location =>
+          coordinatesMatch(location.lat, location.lng, lat, lon)
+        );
+        
+        // Add marker if location isn't already known
+        if (!matchedLocation) {
+          await addMarkerToMap(lat, lon, restroomIcon, restroomHoverIcon, name, amenityType);
+        } else {
+          console.log(`Matched with known location: ${matchedLocation.name}`);
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching data from Overpass API:", error);
+  }
+}
+
+async function loadWaterFountains() {
+  try {
+    const response = await fetch(
+      "https://overpass-api.de/api/interpreter",
+      {
+        method: "POST",
+        body: "data=" + encodeURIComponent(`
+          [bbox:40.566528,-74.124389, 40.911032,-73.521317]
+          [out:json]
+          [timeout:90]
+          ;
+          area[name="New York"]->.nyc;
+          (
+          node["amenity"="drinking_water"](area.nyc);
+          way["amenity"="drinking_water"](area.nyc);
+          relation["amenity"="drinking_water"](area.nyc);
+          );
+          out center;
+        `)
+      }
+    );
+
+    const data = await response.json();
+    const elements = data.elements;
+
+    for (const element of elements) {
+      const { lat, lon, tags } = element;
+      const amenityType = tags.amenity;
+      const name = tags.name || "Unnamed location";
+
+      // Only add markers for accessible drinking water locations
+      if (tags.access === "yes" && lat != null && lon != null) {
+        await addMarkerToMap(lat, lon, waterFountainIcon,waterFountainHoverIcon, name, amenityType);
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching water fountain data:", error);
+  }
+}
+async function loadBenches() {
+  try {
+    const response = await fetch(
+      "https://overpass-api.de/api/interpreter",
+      {
+        method: "POST",
+        body: "data=" + encodeURIComponent(`
+          [bbox:40.566528,-74.124389, 40.911032,-73.521317]
+          [out:json]
+          [timeout:90]
+          ;
+          area[name="New York"]->.nyc;
+          (
+          node["amenity"="bench"](area.nyc);
+          way["amenity"="bench"](area.nyc);
+          relation["amenity"="bench"](area.nyc);
+          );
+          out center;
+        `)
+      }
+    );
+
+    const data = await response.json();
+    const elements = data.elements;
+
+    for (const element of elements) {
+      const { lat, lon, tags } = element;
+      const amenityType = tags.amenity;
+      const name = tags.name || "Unnamed Bench";
+
+      // Only add markers for benches with backrests
+      if (tags.backrest === "yes" && tags.material === "wood"  && lat != null && lon != null) {
+        await addMarkerToMap(lat, lon, benchIcon, benchHoverIcon, name, "Wooden Bench");
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching bench data:", error);
+  }
+}
+  const restroomMarkers = []
+  const trashCanMarkers = []
+  const waterFountainMarkers = []
+  const benchMarkers = []
+
+  async function addMarkerToMap(lat, lon, icon, hoverIcon, name, amenityType) {
+    const marker = L.marker([lat, lon], {icon: icon}).addTo(map)
+        .bindPopup(`
+        <div class="popup-content">
+          <h3>${name}</h3>
+          <p>Amenity: ${amenityType}</p>
+        </div>
+        `);
+        marker.on('mouseover', function() {
+          this.setIcon(hoverIcon);
+        });
+        marker.on('mouseout', function() {
+          this.setIcon(icon);
+        });
+  
+  
+  }
+
+  loadBenches();
+  loadToilets();
+  loadWaterFountains();
+  
   restroomLocations.forEach(location => {
     var marker = L.marker([location.lat, location.lng], { icon: restroomIcon }).addTo(map)
       .bindPopup(`
@@ -242,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `);
     marker.on('mouseover', function() {
-      this.setIcon(restroomhoverIcon);
+      this.setIcon(restroomHoverIcon);
     });
     marker.on('mouseout', function() {
       this.setIcon(restroomIcon);
@@ -258,19 +382,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <h3>${location.name}</h3>
     <p>${location.details}</p>
     </div>
-  `);
-
+    `);
   
-  trashMarker.on('mouseover', function() {
-    this.setIcon(trashcanhovericon); 
+    trashMarker.on('mouseover', function() {
+      this.setIcon(trashcanHoverIcon); 
+    });
+
+    trashMarker.on('mouseout', function() {
+      this.setIcon(trashCanIcon); 
+   });
+
+    trashCanMarkers.push(trashMarker);
   });
 
-  trashMarker.on('mouseout', function() {
-    this.setIcon(trashCanIcon); 
-  });
-
-  trashCanMarkers.push(trashMarker);
-  });
  
  document.getElementById('toggleRestrooms').addEventListener('click', () => {
     restroomMarkers.forEach(marker => {
@@ -290,6 +414,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }});
   });
 
+  document.getElementById('toggleWaterFountains').addEventListener('click', () => {
+    waterFountainMarkers.forEach(marker => {
+      if (map.hasLayer(marker)) {
+        map.removeLayer(marker); 
+      } else {
+        marker.addTo(map); 
+      }
+    });
+  });
+
+  document.getElementById('toggleBenches').addEventListener('click',() => {
+    benchMarkers.forEach(marker =>{
+      if (map.hasLayer(marker)) {
+        map.removeLayer(marker); 
+      } else {
+        marker.addTo(map); 
+      }
+    })
+  });
+
   function coordinatesMatch(lat1, lon1, lat2, lon2, tolerance = 0.001) {  
     return Math.abs(lat1 - lat2) <= tolerance && Math.abs(lon1 - lon2) <= tolerance;
     }});
@@ -303,12 +447,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }).addTo(map).bindPopup('Your Location');
 
   
-
   userMarker.on('click', function () {
     map.setView([lat, lng], 18); 
   });
   }
-
 
   navigator.geolocation.getCurrentPosition(
     (position) => {
