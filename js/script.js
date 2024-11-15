@@ -8,43 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   const restroomIcon = L.icon({
-    iconUrl: 'images/restroom-icon.png', 
-    iconSize: [20, 25],
-    iconAnchor: [10, 24],
+    iconUrl: 'images/trash-can-icon.png', 
+    iconSize: [18, 25],
+    iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
-<<<<<<< HEAD
-  const lowConfidenceRestroomIcon = L.icon({
-    iconUrl: 'images/normal-icon.png',
-    iconSize: [35, 40],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-  })
-  const lowConfRestroomHoverIcon = L.icon({
-    iconUrl: 'images/normal-icon.png',
-    iconSize: [40, 40],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-=======
   const restroomHoverIcon = L.icon({
-    iconUrl: 'images/restroom-icon.png', 
-    iconSize: [20, 28],
-    iconAnchor: [10, 27],
+    iconUrl: 'images/trash-can-icon.png', 
+    iconSize: [18, 28],
+    iconAnchor: [9, 26],
     popupAnchor: [1, -29]
   });
+  
   const waterFountainIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
     iconSize: [20, 25],
     iconAnchor: [10, 24],
     popupAnchor: [1, -26]
-  })
+  });
   const waterFountainHoverIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
     iconSize: [20, 28],
     iconAnchor: [10, 27],
     popupAnchor: [1, -29]
->>>>>>> 0417a2fa7705326c44c976e72e9581e971953d0d
-  })
+
+  });
   
   const trashCanIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
@@ -65,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     iconSize: [20, 25],
     iconAnchor: [10, 22],
     popupAnchor: [1, -26]
-  })
+  });
   const benchHoverIcon = L.icon({
     iconUrl: 'images/bench-icon.png', 
     iconSize: [22,27],
@@ -263,7 +251,6 @@ async function loadToilets() {
     }});
   })
 
-  });
   const data = await toilets.json();
     const elements = data.elements;
 
@@ -286,12 +273,14 @@ async function loadToilets() {
         } else {
           console.log(`Matched with known location: ${matchedLocation.name}`);
         }
+        
       }
     }
-  } catch (error) {
-    console.error("Error fetching data from Overpass API:", error);
   }
-}
+  catch{
+
+  } 
+};
 
 async function loadWaterFountains() {
   try {
