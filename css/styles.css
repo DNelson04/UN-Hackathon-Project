@@ -5,7 +5,7 @@
 body {
   margin: 0;
   background-color: #fafaf0;
-  /*background-image: linear-gradient(to bottom, #fafaf0, #c9b69f,#d4b48e, #b5946b, #705c43, #634623, #5e3809);*/
+
   opacity: 75%;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -14,80 +14,8 @@ body {
   text-align: center;
   width: 65%;
   height: 500px;
-  margin: 0 auto; 
-}
-.top{
-  background-image: linear-gradient(to left,#518ac4,#8abef2, #c5ffab,#9ae356, #3aab05);
-  background-color: #c5ffab;
-  width: 80%; 
-  border-radius: 50px;
-  box-shadow: 1px 1px 1px 1px #b1b3b1;
-  margin: 20px auto;
-  /* overflow: hidden; */
-  justify-content: center;
-}
-.header {
-  color: #6e5330;
-  padding-left: 20px;
-  font-size: calc(1.5vw + 1.5vh);
-  display: inline-block;
-}
- /* .header:hover{
-  cursor: pointer;
-} */
-a:link{
-  text-decoration: none;
-  color: #6e5330;
-} 
-a:visited{
-  text-decoration: none;
-  color: #6e5330;
-}
-a:hover{
-  cursor: pointer;
-  text-decoration: none;
-  color: #6e5330;
-}
-a:active{
-  text-decoration: none;
-  color: #6e5330;
-}
-nav {
-  list-style-type: none;
-  color: #6e5330;
-  float: right;
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-
-  /* padding-top: 13px;
-  padding-bottom: 13px; */
-}
-.tabs {
-  list-style-type: none;
-  margin: 0;
- 
-}
-
-.tabs li {
-  display: inline-block;
- padding: 10px 20px;
- font-size: calc(1.5vw+1.5vh);
-}
-
-/* .tabs li a {
-  text-decoration: none;
-  padding: 10px 15px; 
-  display: inline-block;
-  
-} */
-.tabs li:hover{
-  background-color: #4e6b6e;
-  color: #54360f;
-  opacity: 0.8;
-  cursor: pointer;
-  transition: background-color 0.7s;
-  border-radius: 50px;
+  margin: 2% auto;
+  border-radius: 5px;
 }
 
 .leaflet-popup {
@@ -138,7 +66,7 @@ nav {
 
 
 .restroom {
-  background-color: #3aab05; 
+  background-color: #1b77f0; 
   border: none;
   color: white; 
   padding: 10px 20px; 
@@ -150,7 +78,7 @@ nav {
   font-family: Arial, Helvetica, sans-serif;
 }
 .trash-can{
-  background-color: #3aab05; 
+  background-color: #1b77f0; 
   border: none;
   color: white; 
   padding: 10px 20px; 
@@ -164,25 +92,24 @@ nav {
 
 .restroom:hover {
   padding: 15px 22px; 
-  background-color: #ec711f; 
+  background-color: #4696ff; 
 }
 
 .trash-can:hover {
   padding: 15px 22px; 
-  background-color: #ec711f; 
+  background-color: #4696ff; 
 }
 
 .restroom:active{
-  background-color: #f58439;
+  background-color: #074596;
 
 }
 
 .trash-can:active{
-  background-color: #f58439;
+  background-color: #074596;
 
 }
 img{
-
   margin-top: 5%;
   height: 350px;
 }

@@ -14,13 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     popupAnchor: [1, -34]
   });
   const lowConfidenceRestroomIcon = L.icon({
-    iconUrl: 'images/low-conf-icon.png',
+    iconUrl: 'images/normal-icon.png',
     iconSize: [35, 40],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
   })
   const lowConfRestroomHoverIcon = L.icon({
-    iconUrl: 'images/low-conf-icon.png',
+    iconUrl: 'images/normal-icon.png',
     iconSize: [40, 40],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
@@ -190,9 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "https://overpass-api.de/api/interpreter",
    {
   method: "POST",
-  // The body contains the query
-  // to understand the query language see "The Programmatic Query Language" on
-  // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
+
   body: "data="+ encodeURIComponent(`
       [bbox:40.566528,-74.124389, 40.911032,-73.521317]
       [out:json]
@@ -209,12 +207,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }).then(
   (response => response.json())
   ).then(data => {
-    const elements = data.elements; // Get the 'elements' array from the response
+    const elements = data.elements; 
     elements.forEach(element => {
-    const { lat, lon, tags } = element; // Destructure latitude, longitude, and tags from each element
-    const amenityType = tags.amenity; // Get the type of amenity
-    const name = tags.name || "Unnamed location"; // Get the name if available, otherwise "Unnamed"
-    // Log the data for each public restroom (latitude, longitude, and name)
+    const { lat, lon, tags } = element; 
+    const amenityType = tags.amenity;
+    const name = tags.name || "Unnamed location"; 
+    
     const matchedLocation = restroomLocations.find(location =>{
       return coordinatesMatch(location.lat, location.lng, lat, lon);
     });
