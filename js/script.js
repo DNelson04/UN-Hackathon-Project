@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   const restroomIcon = L.icon({
-    iconUrl: 'images/trash-can-icon.png', 
+    iconUrl: 'images/restroom-icon.png', 
     iconSize: [18, 25],
     iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
   const restroomHoverIcon = L.icon({
-    iconUrl: 'images/trash-can-icon.png', 
+    iconUrl: 'images/restroom-icon.png', 
     iconSize: [18, 28],
     iconAnchor: [9, 26],
     popupAnchor: [1, -29]
