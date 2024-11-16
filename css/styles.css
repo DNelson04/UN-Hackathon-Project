@@ -14,6 +14,12 @@ body {
   vertical-align: middle;
 }
 
+header{
+  display: inline-block;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #logo{
   height: auto;
   width: 75px;
