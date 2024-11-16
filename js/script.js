@@ -1,5 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  var map = L.map('map').setView([40.7128, -74.0060], 12);
+    var map = L.map('map', {
+      center: [40.7128, -74.0060], 
+      zoom: 13,                   
+      minZoom: 10,                
+      maxZoom: 18   
+
+
+    });
+ 
 
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -9,26 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const restroomIcon = L.icon({
     iconUrl: 'images/restroom-icon.png', 
-    iconSize: [18, 25],
+    iconSize: [30, 38],
     iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
   const restroomHoverIcon = L.icon({
     iconUrl: 'images/restroom-icon.png', 
-    iconSize: [18, 28],
+    iconSize: [30, 38],
     iconAnchor: [9, 26],
     popupAnchor: [1, -29]
   });
   
   const waterFountainIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
-    iconSize: [20, 25],
+    iconSize: [30, 38],
     iconAnchor: [10, 24],
     popupAnchor: [1, -26]
   });
   const waterFountainHoverIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
-    iconSize: [20, 28],
+    iconSize: [30, 38],
     iconAnchor: [10, 27],
     popupAnchor: [1, -29]
 
@@ -36,30 +44,30 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const trashCanIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [18, 25],
+    iconSize: [30, 38],
     iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
   
   const trashcanHoverIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [18, 28],
+    iconSize: [30, 38],
     iconAnchor: [9, 26],
     popupAnchor: [1, -29]
   });
 
   const benchIcon = L.icon({
     iconUrl: 'images/bench-icon.png', 
-    iconSize: [20, 25],
+    iconSize: [30, 38],
     iconAnchor: [10, 22],
     popupAnchor: [1, -26]
   });
-  const benchHoverIcon = L.icon({
-    iconUrl: 'images/bench-icon.png', 
-    iconSize: [22,27],
-    iconAnchor: [11, 24],
-    popupAnchor: [1, -28]
-  });
+  // const benchHoverIcon = L.icon({
+  //   // iconUrl: 'images/bench-icon.png', 
+  //   iconSize: [22,27],
+  //   iconAnchor: [11, 24],
+  //   popupAnchor: [1, -28]
+  // });
 
   
   const restroomLocations = [
@@ -85,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7233, lng: -73.9865, name: 'Restroom 20', details: 'Location: Near the Bowery, Clean and accessible!' },
     { lat: 40.7055, lng: -74.0091, name: 'Restroom 21', details: 'Location: Near South Street Seaport, Clean and accessible!' },
     { lat: 40.7190, lng: -74.0035, name: 'Restroom 22', details: 'Location: Near the East River Park, Clean and accessible!' },
-    { lat: 40.6887, lng: -74.0270, name: 'Restroom 23', details: 'Location: Near the Staten Island Ferry Terminal, Clean and accessible!' },
+    // { lat: 40.6887, lng: -74.0270, name: 'Restroom 23', details: 'Location: Near the Staten Island Ferry Terminal, Clean and accessible!' },
     { lat: 40.7203, lng: -73.9940, name: 'Restroom 24', details: 'Location: Near the Hudson River Park, Clean and accessible!' },
     { lat: 40.7486, lng: -73.9879, name: 'Restroom 25', details: 'Location: Near Herald Square, Clean and accessible!' },
     { lat: 40.7122, lng: -73.9985, name: 'Restroom 26', details: 'Location: Near City Hall Park, Clean and accessible!' },
@@ -178,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7851, lng: -73.9683, name: 'Trash Can 34', details: 'Location: Near Central Park South' },
     { lat: 40.7527, lng: -73.9772, name: 'Trash Can 35', details: 'Location: Near New York Public Library' },
     { lat: 40.6902, lng: -73.9249, name: 'Trash Can 36', details: 'Location: Near Brooklyn College' },
-    { lat: 40.7060, lng: -73.9930, name: 'Trash Can 37', details: 'Location: Near Brooklyn Bridge' },
+    // { lat: 40.7060, lng: -73.9930, name: 'Trash Can 37', details: 'Location: Near Brooklyn Bridge' },
     { lat: 40.6417, lng: -73.9442, name: 'Trash Can 38', details: 'Location: Near Brooklyn Prospect Park' },
     { lat: 40.6782, lng: -73.9442, name: 'Trash Can 39', details: 'Location: Near Prospect Park West' },
     { lat: 40.6374, lng: -73.9439, name: 'Trash Can 40', details: 'Location: Near Canarsie Park' },
@@ -255,9 +263,9 @@ async function loadToilets() {
     const elements = data.elements;
 
 
-    // Process each element asynchronously
+    
     for (const element of elements) {
-      // Ensure both lat and lon are present
+      
       if (element.lat != null && element.lon != null) {
         const { lat, lon, tags } = element;
         const amenityType = tags.amenity;
@@ -267,7 +275,7 @@ async function loadToilets() {
           coordinatesMatch(location.lat, location.lng, lat, lon)
         );
         
-        // Add marker if location isn't already known
+       
         if (!matchedLocation) {
           await addMarkerToMap(lat, lon, restroomIcon, restroomHoverIcon, name, amenityType);
         } else {
@@ -312,7 +320,7 @@ async function loadWaterFountains() {
       const amenityType = tags.amenity;
       const name = tags.name || "Unnamed location";
 
-      // Only add markers for accessible drinking water locations
+
       if (tags.access === "yes" && lat != null && lon != null) {
         await addMarkerToMap(lat, lon, waterFountainIcon,waterFountainHoverIcon, name, amenityType);
       }
@@ -351,7 +359,6 @@ async function loadBenches() {
       const amenityType = tags.amenity;
       const name = tags.name || "Unnamed Bench";
 
-      // Only add markers for benches with backrests
       if (tags.backrest === "yes" && tags.material === "wood"  && lat != null && lon != null) {
         await addMarkerToMap(lat, lon, benchIcon, benchHoverIcon, name, "Wooden Bench");
       }
@@ -404,7 +411,8 @@ async function loadBenches() {
     restroomMarkers.push(marker);
   });
 
-  
+
+
   trashCanLocations.forEach(location => {
     var trashMarker = L.marker([location.lat, location.lng], { icon: trashCanIcon }).addTo(map)
     .bindPopup(`
@@ -454,15 +462,6 @@ async function loadBenches() {
     });
   });
 
-  document.getElementById('toggleBenches').addEventListener('click',() => {
-    benchMarkers.forEach(marker =>{
-      if (map.hasLayer(marker)) {
-        map.removeLayer(marker); 
-      } else {
-        marker.addTo(map); 
-      }
-    })
-  });
 
   function coordinatesMatch(lat1, lon1, lat2, lon2, tolerance = 0.001) {  
     return Math.abs(lat1 - lat2) <= tolerance && Math.abs(lon1 - lon2) <= tolerance;
