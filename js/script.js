@@ -255,9 +255,9 @@ async function loadToilets() {
     const elements = data.elements;
 
 
-    // Process each element asynchronously
+    
     for (const element of elements) {
-      // Ensure both lat and lon are present
+      
       if (element.lat != null && element.lon != null) {
         const { lat, lon, tags } = element;
         const amenityType = tags.amenity;
@@ -267,7 +267,7 @@ async function loadToilets() {
           coordinatesMatch(location.lat, location.lng, lat, lon)
         );
         
-        // Add marker if location isn't already known
+       
         if (!matchedLocation) {
           await addMarkerToMap(lat, lon, restroomIcon, restroomHoverIcon, name, amenityType);
         } else {
@@ -312,7 +312,7 @@ async function loadWaterFountains() {
       const amenityType = tags.amenity;
       const name = tags.name || "Unnamed location";
 
-      // Only add markers for accessible drinking water locations
+
       if (tags.access === "yes" && lat != null && lon != null) {
         await addMarkerToMap(lat, lon, waterFountainIcon,waterFountainHoverIcon, name, amenityType);
       }
@@ -351,7 +351,6 @@ async function loadBenches() {
       const amenityType = tags.amenity;
       const name = tags.name || "Unnamed Bench";
 
-      // Only add markers for benches with backrests
       if (tags.backrest === "yes" && tags.material === "wood"  && lat != null && lon != null) {
         await addMarkerToMap(lat, lon, benchIcon, benchHoverIcon, name, "Wooden Bench");
       }
