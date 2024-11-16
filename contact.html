@@ -23,7 +23,7 @@
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
           <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-4">CleanCityMap</span>
+            <span class="fs-4" href="map.html">CleanCityMap</span>
           </a>
     
           <ul class="nav nav-pills">
@@ -32,6 +32,22 @@
             <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
           </ul>
         </header>
+      </div>
+      <div class="contact-container">
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact">
+          <div class="contact-title">
+            <h2>Contact Us</h2>
+            <hr>
+          </div>
+          <input type="hidden" name="access_key" value="d94879d5-10cb-49c9-82cb-1d44259e1102">
+          <input type="text" name="name" placeholder="Your Name" class="contact-info">
+          <input type="email" name="email" placeholder="Your Email" class="contact-info">
+          <textarea name="message" placeholder="Your Message" class="contact-info"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <div class="contact-logo">
+          <img src="images/logo.png">
+        </div>
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
