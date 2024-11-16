@@ -1,5 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  var map = L.map('map').setView([40.7128, -74.0060], 12);
+    var map = L.map('map', {
+      center: [40.7128, -74.0060], 
+      zoom: 13,                   
+      minZoom: 10,                
+      maxZoom: 18   
+
+
+    });
+ 
 
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -403,7 +411,8 @@ async function loadBenches() {
     restroomMarkers.push(marker);
   });
 
-  
+
+
   trashCanLocations.forEach(location => {
     var trashMarker = L.marker([location.lat, location.lng], { icon: trashCanIcon }).addTo(map)
     .bindPopup(`
@@ -453,15 +462,6 @@ async function loadBenches() {
     });
   });
 
-  document.getElementById('toggleBenches').addEventListener('click',() => {
-    benchMarkers.forEach(marker =>{
-      if (map.hasLayer(marker)) {
-        map.removeLayer(marker); 
-      } else {
-        marker.addTo(map); 
-      }
-    })
-  });
 
   function coordinatesMatch(lat1, lon1, lat2, lon2, tolerance = 0.001) {  
     return Math.abs(lat1 - lat2) <= tolerance && Math.abs(lon1 - lon2) <= tolerance;
