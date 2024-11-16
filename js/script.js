@@ -9,26 +9,26 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const restroomIcon = L.icon({
     iconUrl: 'images/restroom-icon.png', 
-    iconSize: [18, 25],
+    iconSize: [30, 38],
     iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
   const restroomHoverIcon = L.icon({
     iconUrl: 'images/restroom-icon.png', 
-    iconSize: [18, 28],
+    iconSize: [30, 38],
     iconAnchor: [9, 26],
     popupAnchor: [1, -29]
   });
   
   const waterFountainIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
-    iconSize: [20, 25],
+    iconSize: [30, 38],
     iconAnchor: [10, 24],
     popupAnchor: [1, -26]
   });
   const waterFountainHoverIcon = L.icon({
     iconUrl: 'images/water-fountain-icon.png',
-    iconSize: [20, 28],
+    iconSize: [30, 38],
     iconAnchor: [10, 27],
     popupAnchor: [1, -29]
 
@@ -36,30 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const trashCanIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [18, 25],
+    iconSize: [30, 38],
     iconAnchor: [9, 25],
     popupAnchor: [1, -26]
   });
   
   const trashcanHoverIcon = L.icon({
     iconUrl: 'images/trash-can-icon.png', 
-    iconSize: [18, 28],
+    iconSize: [30, 38],
     iconAnchor: [9, 26],
     popupAnchor: [1, -29]
   });
 
   const benchIcon = L.icon({
     iconUrl: 'images/bench-icon.png', 
-    iconSize: [20, 25],
+    iconSize: [30, 38],
     iconAnchor: [10, 22],
     popupAnchor: [1, -26]
   });
-  const benchHoverIcon = L.icon({
-    iconUrl: 'images/bench-icon.png', 
-    iconSize: [22,27],
-    iconAnchor: [11, 24],
-    popupAnchor: [1, -28]
-  });
+  // const benchHoverIcon = L.icon({
+  //   // iconUrl: 'images/bench-icon.png', 
+  //   iconSize: [22,27],
+  //   iconAnchor: [11, 24],
+  //   popupAnchor: [1, -28]
+  // });
 
   
   const restroomLocations = [
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7233, lng: -73.9865, name: 'Restroom 20', details: 'Location: Near the Bowery, Clean and accessible!' },
     { lat: 40.7055, lng: -74.0091, name: 'Restroom 21', details: 'Location: Near South Street Seaport, Clean and accessible!' },
     { lat: 40.7190, lng: -74.0035, name: 'Restroom 22', details: 'Location: Near the East River Park, Clean and accessible!' },
-    { lat: 40.6887, lng: -74.0270, name: 'Restroom 23', details: 'Location: Near the Staten Island Ferry Terminal, Clean and accessible!' },
+    // { lat: 40.6887, lng: -74.0270, name: 'Restroom 23', details: 'Location: Near the Staten Island Ferry Terminal, Clean and accessible!' },
     { lat: 40.7203, lng: -73.9940, name: 'Restroom 24', details: 'Location: Near the Hudson River Park, Clean and accessible!' },
     { lat: 40.7486, lng: -73.9879, name: 'Restroom 25', details: 'Location: Near Herald Square, Clean and accessible!' },
     { lat: 40.7122, lng: -73.9985, name: 'Restroom 26', details: 'Location: Near City Hall Park, Clean and accessible!' },
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { lat: 40.7851, lng: -73.9683, name: 'Trash Can 34', details: 'Location: Near Central Park South' },
     { lat: 40.7527, lng: -73.9772, name: 'Trash Can 35', details: 'Location: Near New York Public Library' },
     { lat: 40.6902, lng: -73.9249, name: 'Trash Can 36', details: 'Location: Near Brooklyn College' },
-    { lat: 40.7060, lng: -73.9930, name: 'Trash Can 37', details: 'Location: Near Brooklyn Bridge' },
+    // { lat: 40.7060, lng: -73.9930, name: 'Trash Can 37', details: 'Location: Near Brooklyn Bridge' },
     { lat: 40.6417, lng: -73.9442, name: 'Trash Can 38', details: 'Location: Near Brooklyn Prospect Park' },
     { lat: 40.6782, lng: -73.9442, name: 'Trash Can 39', details: 'Location: Near Prospect Park West' },
     { lat: 40.6374, lng: -73.9439, name: 'Trash Can 40', details: 'Location: Near Canarsie Park' },
