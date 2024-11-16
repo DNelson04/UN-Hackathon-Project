@@ -15,8 +15,9 @@ body {
 }
 
 #logo{
+  margin-bottom: 20px;
   height: auto;
-  width: 75px;
+  width: 50px;
   vertical-align: center;
 }
 
